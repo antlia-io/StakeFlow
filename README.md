@@ -1,4 +1,4 @@
-![ANTLIA logo — spaceship blasting off](/src/assests/backwalls/antlia.png)
+![ANTLIA logo — spaceship blasting off](./antlia.png)
 
 # Welcome to ANTLIA Stakeflow!
 
