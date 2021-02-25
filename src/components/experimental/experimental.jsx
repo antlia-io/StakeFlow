@@ -9,7 +9,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import { withNamespaces } from 'react-i18next';
 import Snackbar from '../snackbar';
 import Asset from './asset';
-import Loader from '../loader';
+// import Loader from '../loader';
 import AssetsDetails from '../assetsdetails';
 import Ethereum from '../../assets/ETH-icon.png';
 import { ERROR, GET_EXPERIMENTAL_VAULT_BALANCES_FULL, EXPERIMENTAL_VAULT_BALANCES_FULL_RETURNED, DEPOSIT_EXPERIMENTAL_VAULT_RETURNED, DEPOSIT_ALL_EXPERIMENTAL_VAULT_RETURNED, CLAIM_EXPERIMENTAL_VAULT_RETURNED, ZAP_EXPERIMENTAL_VAULT_RETURNED, CONNECTION_CONNECTED, CONNECTION_DISCONNECTED } from '../../constants';
@@ -349,868 +349,869 @@ class Experimental extends Component {
 
   render() {
     const { classes } = this.props;
-    const { loading, account, snackbarMessage } = this.state;
-    if (!account || !account.address) {
-      return (
-        <div className={classes.root}>
-          <div className="container-xl">
-            <AssetsDetails />
-            <div className="table-box cardBg mb">
-              <h4>Pools</h4>
-              <div className="table-responsive pools-table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pool Address</th>
-                      <th>Assets</th>
-                      <th>Swap Fee</th>
-                      <th>Market Cap</th>
-                      <th>My Liquidity</th>
-                      <th>Volume (24)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="pools-table">
-                    {this.state.PoolsList.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <div className="addressFormat">{item.address}</div>
-                        </td>
-                        <td>
-                          <div className="icon-name">
-                            <span>
-                              {item.assets}% {item.symbol}
-                            </span>
-                            <span>
-                              {item.assets}% {item.symbol}
-                            </span>
-                          </div>
-                        </td>
-                        <td>{item.swapFee}</td>
-                        <td>{item.marketCap}</td>
-                        <td>{item.myLiquidity}</td>
-                        <td>{item.volume}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="Widget mb">
-              <div className="widgetHeader">
-                <div className="address">
-                  <i className="fa fa-arrow-left"></i>
-                  <p className="mr-3">Pool</p>
-                  <p>GCUJF.....YXAHI</p>
-                </div>
-                <div className="widgetButtons">
-                  <button
-                    className="btn btn-default add-btn"
-                    type="button"
-                    data-toggle="modal"
-                    data-target="#LiquidityModal"
-                  >
-                    Add Liquidity
-                  </button>
-                  <button
-                    className="btn btn-default remove-btn"
-                    type="button"
-                    data-toggle="modal"
-                    data-target="#RemoveLiquidityModal"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-              <div className="greyBox">
-                <div className="row">
-                  <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div className="AmountBox text-center">
-                      <h1 className="Amount">$844.15</h1>
-                      <p>Liquidity</p>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div className="AmountBox text-center">
-                      <h1 className="Amount">$844.15</h1>
-                      <p>Volume (24hr)</p>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div className="AmountBox text-center">
-                      <h1 className="Amount">0.25%</h1>
-                      <p>Swap Fee</p>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div className="AmountBox text-center">
-                      <h1 className="Amount">0.00%</h1>
-                      <p>My Pool Share</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="tabs">
-                <ul
-                  className="nav nav-tabs customTabs"
-                  id="myTab"
-                  role="tablist"
-                >
-                  <li className="nav-item" role="presentation">
-                    <a
-                      className="nav-link active"
-                      id="home-tab"
-                      data-toggle="tab"
-                      href="#home"
-                      role="tab"
-                      aria-controls="home"
-                      aria-selected="true"
-                    >
-                      Balances
-                      <p>1</p>
-                    </a>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <a
-                      className="nav-link"
-                      id="profile-tab"
-                      data-toggle="tab"
-                      href="#profile"
-                      role="tab"
-                      aria-controls="profile"
-                      aria-selected="false"
-                    >
-                      Swaps
-                      <p>22</p>
-                    </a>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <a
-                      className="nav-link"
-                      id="contact-tab"
-                      data-toggle="tab"
-                      href="#contact"
-                      role="tab"
-                      aria-controls="contact"
-                      aria-selected="false"
-                    >
-                      Holders
-                      <p>1234</p>
-                    </a>
-                  </li>
-                  <li className="nav-item d-flex" role="presentation">
-                    <a
-                      className="nav-link w-100 d-flex justify-content-center"
-                      id="about-tab"
-                      data-toggle="tab"
-                      href="#about"
-                      role="tab"
-                      aria-controls="about"
-                      aria-selected="false"
-                    >
-                      About
-                    </a>
-                  </li>
-                </ul>
-                <div className="tab-content" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="home"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                  >
-                    <div className="table-responsive mt-3 balance-table">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th className="border-0">Token</th>
-                            <th className="border-0">Weight</th>
-                            <th className="border-0">Pool Balance</th>
-                            <th className="border-0">My Balance</th>
-                            <th className="border-0">My Asset Value</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.BalanceList.map((item, index) => (
-                            <tr key={index}>
-                              <td>
-                                <div className="icon-name">
-                                  <div className="iconDiv">
-                                    <img src={item.icon} alt="logo" />
-                                  </div>
-                                  <span>{item.symbol}</span>
-                                </div>
-                              </td>
-                              <td>{item.weight}%</td>
-                              <td>{item.poolBalance}K</td>
-                              <td>{item.myBalance}</td>
-                              <td>${item.assetValue}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                  >
-                    <div className="table-responsive mt-3 swaps-table">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th className="border-0">Trade In</th>
-                            <th className="border-0">Trade Out</th>
-                            <th className="border-0">Transaction</th>
-                            <th className="border-0">Swap Fee</th>
-                            <th className="border-0">Time</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.SwapsList.map((item, index) => (
-                            <tr key={index}>
-                              <td>
-                                <div className="icon-name">
-                                  <div className="iconDiv">
-                                    <img src={item.icon} alt="logo" />
-                                  </div>
-                                  <span>{item.tradeIn}</span>
-                                  <span>{item.symbol}</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="icon-name">
-                                  <div className="iconDiv">
-                                    <img src={item.icon} alt="logo" />
-                                  </div>
-                                  <span>{item.tradeOut}</span>
-                                  <span>{item.symbol}</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="addressFormat">
-                                  {item.transaction}
-                                </div>
-                              </td>
-                              <td>{item.swapFee}</td>
-                              <td>{item.time}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="contact"
-                    role="tabpanel"
-                    aria-labelledby="contact-tab"
-                  >
-                    <div className="table-responsive mt-3 holders-table">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th className="border-0">Holder</th>
-                            <th className="border-0">Balance</th>
-                            <th className="border-0">Value</th>
-                            <th className="border-0">Shares</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.HoldersList.map((item, index) => (
-                            <tr key={index}>
-                              <td className="border-0">
-                                {item.holder} {item.symbol}
-                              </td>
-                              <td className="border-0">{item.balance} CRPT</td>
-                              <td className="border-0">${item.value}</td>
-                              <td className="border-0">${item.shares}%</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="about"
-                    role="tabpanel"
-                    aria-labelledby="about-tab"
-                  >
-                    <div className="about-content">
-                      <div className="item-list">
-                        <div className="item">
-                          <div className="property">Pool Type</div>
-                          <div className="value">Shared Pool</div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Creator</div>
-                          <div className="value addressFormat">
-                            0x3ierebufbwiefsdffosdvfuvfweofydfsd
-                          </div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Creation date</div>
-                          <div className="value">
-                            October 14, 2020, 12:00:00 PM
-                          </div>
-                        </div>
-                        <div className="item">
-                          <div className="property">CRPT asset</div>
-                          <div className="value addressFormat">
-                            0x3ierebufbwiefsdffosdvfuvfweofydfsd
-                          </div>
-                        </div>
-                        <div className="item">
-                          <div className="property">CRPT total supply</div>
-                          <div className="value">0.12345678901234567890</div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Public swap</div>
-                          <div className="value">Enabled</div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Swap fee</div>
-                          <div className="value">0.25%</div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Total swap volume</div>
-                          <div className="value">$3.97M</div>
-                        </div>
-                        <div className="item">
-                          <div className="property">Total swap fee</div>
-                          <div className="value">$9.93K</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="modal fade SupplyModal"
-                  id="LiquidityModal"
-                  tabIndex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div className="modal-container">
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div className="modal-body">
-                          <h2 className="modalTitle">Add Liquidity</h2>
-                          <div className="ModalContent">
-                            <ul
-                              className="nav nav-tabs ModalTabs"
-                              id="myTab"
-                              role="tablist"
-                            >
-                              <li className="nav-item" role="presentation">
-                                <a
-                                  className="nav-link active"
-                                  id="supply1-tab"
-                                  data-toggle="tab"
-                                  href="#supply1"
-                                  role="tab"
-                                  aria-controls="supply1"
-                                  aria-selected="true"
-                                >
-                                  Multi Assets
-                                </a>
-                              </li>
-                              <li className="nav-item" role="presentation">
-                                <a
-                                  className="nav-link"
-                                  id="withdraw1-tab"
-                                  data-toggle="tab"
-                                  href="#withdraw1"
-                                  role="tab"
-                                  aria-controls="withdraw1"
-                                  aria-selected="false"
-                                >
-                                  Single Asset
-                                </a>
-                              </li>
-                            </ul>
-                            <div
-                              className="tab-content modalTabsCont"
-                              id="myTabContent"
-                            >
-                              <div
-                                className="tab-pane fade show active"
-                                id="supply1"
-                                role="tabpanel"
-                                aria-labelledby="supply1-tab"
-                              >
-                                <div className="grey-box">
-                                  <p>
-                                    <strong>Pool Overview</strong>
-                                  </p>
-                                  <div className="overview-box">
-                                    <div>
-                                      <p>0x69c2...ada20</p>
-                                      <p className="mb-0">
-                                        My Share: 0.00% | Swap Fee 0.25%
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p>ETH 50%</p>
-                                      <p className="mb-0">USDC 50%</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="table-responsive mt-3">
-                                  <table className="liquidity-table">
-                                    <thead className="theadBg">
-                                      <tr>
-                                        <th className="border-0">Asset</th>
-                                        <th className="border-0">Balance</th>
-                                        <th className="border-0">
-                                          Deposit Amount
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>
-                                          <div className="input-group">
-                                            <input
-                                              className="form-control"
-                                              type="text"
-                                              placeholder="0.00"
-                                            />
-                                            <div className="input-group-append">
-                                              <button
-                                                className="btn btn-default maxBtn"
-                                                type="submit"
-                                              >
-                                                max
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>
-                                          <div className="input-group">
-                                            <input
-                                              className="form-control"
-                                              type="text"
-                                              placeholder="0.00"
-                                            />
-                                            <div className="input-group-append">
-                                              <button
-                                                className="btn btn-default maxBtn"
-                                                type="submit"
-                                              >
-                                                max
-                                                </button>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <div className="totalAmount">
-                                  <div>
-                                    <span>CRPT Amount</span>
-                                  </div>
-                                  <div>
-                                    <span>0.0000</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="tab-pane fade"
-                                id="withdraw1"
-                                role="tabpanel"
-                                aria-labelledby="withdraw1-tab"
-                              >
-                                <div className="grey-box">
-                                  <p>
-                                    <strong>Pool Overview</strong>
-                                  </p>
-                                  <div className="overview-box">
-                                    <div>
-                                      <p>0x69c2...ada20</p>
-                                      <p className="mb-0">
-                                        My Share: 0.00% | Swap Fee 0.25%
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p>100% Cream</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="table-responsive mt-3">
-                                  <table className="liquidity-table">
-                                    <thead className="theadBg">
-                                      <tr>
-                                        <th className="border-0">Asset</th>
-                                        <th className="border-0">Balance</th>
-                                        <th className="border-0">
-                                          Deposit Amount
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>
-                                          <div className="input-group">
-                                            <input
-                                              className="form-control"
-                                              type="text"
-                                              placeholder="0.00"
-                                            />
-                                            <div className="input-group-append">
-                                              <button
-                                                className="btn btn-default maxBtn"
-                                                type="submit"
-                                              >
-                                                max
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <div className="totalAmount">
-                                  <div>
-                                    <span>CRPT Amount</span>
-                                  </div>
-                                  <div>
-                                    <span>0.0000</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            className="btn btn-default enableBtn"
-                          >
-                            Add Liquidity
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="modal fade SupplyModal"
-                  id="RemoveLiquidityModal"
-                  tabIndex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div className="modal-container">
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div className="modal-body">
-                          <h2 className="modalTitle"> Remove Liquidity</h2>
-                          <div className="ModalContent">
-                            <ul
-                              className="nav nav-tabs ModalTabs"
-                              id="myTab"
-                              role="tablist"
-                            >
-                              <li className="nav-item" role="presentation">
-                                <a
-                                  className="nav-link active"
-                                  id="supply1-tab"
-                                  data-toggle="tab"
-                                  href="#supply1"
-                                  role="tab"
-                                  aria-controls="supply1"
-                                  aria-selected="true"
-                                >
-                                  Multi Assets
-                                </a>
-                              </li>
-                              <li className="nav-item" role="presentation">
-                                <a
-                                  className="nav-link"
-                                  id="withdraw1-tab"
-                                  data-toggle="tab"
-                                  href="#withdraw1"
-                                  role="tab"
-                                  aria-controls="withdraw1"
-                                  aria-selected="false"
-                                >
-                                  Single Asset
-                                </a>
-                              </li>
-                            </ul>
-                            <div
-                              className="tab-content modalTabsCont"
-                              id="myTabContent"
-                            >
-                              <div
-                                className="tab-pane fade show active"
-                                id="supply1"
-                                role="tabpanel"
-                                aria-labelledby="supply1-tab"
-                              >
-                                <div className="grey-box">
-                                  <p>
-                                    <strong>Pool Overview</strong>
-                                  </p>
-                                  <div className="overview-box">
-                                    <div>
-                                      <p>0x69c2...ada20</p>
-                                      <p className="mb-0">
-                                        My Share: 0.00% | Swap Fee 0.25%
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p>ETH 50%</p>
-                                      <p className="mb-0">USDC 50%</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="table-responsive mt-3">
-                                  <table className="liquidity-table">
-                                    <thead className="theadBg">
-                                      <tr>
-                                        <th className="border-0">Asset</th>
-                                        <th className="border-0">
-                                          My Pool Balance
-                                        </th>
-                                        <th className="border-0">Withdraw</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>0.00000</td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>0.00000</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <div className="totalAmount">
-                                  <div>
-                                    <span>CRPT Amount</span>
-                                  </div>
-                                  <div className="input-group Cr-Input">
-                                    <input
-                                      className="form-control"
-                                      type="text"
-                                      placeholder="0.00"
-                                    />
-                                    <div className="input-group-append">
-                                      <button
-                                        className="btn btn-default maxBtn"
-                                        type="submit"
-                                      >
-                                        max
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="tab-pane fade"
-                                id="withdraw1"
-                                role="tabpanel"
-                                aria-labelledby="withdraw1-tab"
-                              >
-                                <div className="grey-box">
-                                  <p>
-                                    <strong>Pool Overview</strong>
-                                  </p>
-                                  <div className="overview-box">
-                                    <div>
-                                      <p>0x69c2...ada20</p>
-                                      <p className="mb-0">
-                                        My Share: 0.00% | Swap Fee 0.25%
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p>100% Cream</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="table-responsive mt-3">
-                                  <table className="liquidity-table">
-                                    <thead className="theadBg">
-                                      <tr>
-                                        <th className="border-0">Asset</th>
-                                        <th className="border-0">Balance</th>
-                                        <th className="border-0">
-                                          Deposit Amount
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div className="icon-name">
-                                            <div className="iconDiv">
-                                              <img
-                                                src={Ethereum}
-                                                alt="Ethereum"
-                                              />
-                                            </div>
-                                            <div className="tableinnerSec">
-                                              <div>ETH</div>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>0.02</td>
-                                        <td>
-                                          <div className="input-group">
-                                            <input
-                                              className="form-control"
-                                              type="text"
-                                              placeholder="0.00"
-                                            />
-                                            <div className="input-group-append">
-                                              <button
-                                                className="btn btn-default maxBtn"
-                                                type="submit"
-                                              >
-                                                max
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <div className="totalAmount">
-                                  <div>
-                                    <span>CRPT Amount</span>
-                                  </div>
-                                  <div>
-                                    <span>0.0000</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            className="btn btn-default enableBtn"
-                          >
-                            Remove Liquidity
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {snackbarMessage && this.renderSnackbar()}
-          </div>
-        </div>
-      )
-    }
+    const { snackbarMessage } = this.state;
+    // const { loading, account, snackbarMessage } = this.state;
+    // if (!account || !account.address) {
     return (
       <div className={classes.root}>
-        <div className={classes.investedContainer}>
-          <Typography variant={'h5'} className={classes.disaclaimer}>
-            This project is in beta. Use at your own risk.
-          </Typography>
-          {this.renderFilters()}
-          {this.renderAssetBlocks()}
-          {this.renderStrategyRewards()}
+        <div className="container-xl">
+          <AssetsDetails />
+          <div className="table-box cardBg mb">
+            <h4>Pools</h4>
+            <div className="table-responsive pools-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Pool Address</th>
+                    <th>Assets</th>
+                    <th>Swap Fee</th>
+                    <th>Market Cap</th>
+                    <th>My Liquidity</th>
+                    <th>Volume (24)</th>
+                  </tr>
+                </thead>
+                <tbody className="pools-table">
+                  {this.state.PoolsList.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <div className="addressFormat">{item.address}</div>
+                      </td>
+                      <td>
+                        <div className="icon-name">
+                          <span>
+                            {item.assets}% {item.symbol}
+                          </span>
+                          <span>
+                            {item.assets}% {item.symbol}
+                          </span>
+                        </div>
+                      </td>
+                      <td>{item.swapFee}</td>
+                      <td>{item.marketCap}</td>
+                      <td>{item.myLiquidity}</td>
+                      <td>{item.volume}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="Widget mb">
+            <div className="widgetHeader">
+              <div className="address">
+                <i className="fa fa-arrow-left"></i>
+                <p className="mr-3">Pool</p>
+                <p>GCUJF.....YXAHI</p>
+              </div>
+              <div className="widgetButtons">
+                <button
+                  className="btn btn-default add-btn"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#LiquidityModal"
+                >
+                  Add Liquidity
+                  </button>
+                <button
+                  className="btn btn-default remove-btn"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#RemoveLiquidityModal"
+                >
+                  Remove
+                  </button>
+              </div>
+            </div>
+            <div className="greyBox">
+              <div className="row">
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                  <div className="AmountBox text-center">
+                    <h1 className="Amount">$844.15</h1>
+                    <p>Liquidity</p>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                  <div className="AmountBox text-center">
+                    <h1 className="Amount">$844.15</h1>
+                    <p>Volume (24hr)</p>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                  <div className="AmountBox text-center">
+                    <h1 className="Amount">0.25%</h1>
+                    <p>Swap Fee</p>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                  <div className="AmountBox text-center">
+                    <h1 className="Amount">0.00%</h1>
+                    <p>My Pool Share</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tabs">
+              <ul
+                className="nav nav-tabs customTabs"
+                id="myTab"
+                role="tablist"
+              >
+                <li className="nav-item" role="presentation">
+                  <a
+                    className="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                  >
+                    Balances
+                      <p>1</p>
+                  </a>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <a
+                    className="nav-link"
+                    id="profile-tab"
+                    data-toggle="tab"
+                    href="#profile"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="false"
+                  >
+                    Swaps
+                      <p>22</p>
+                  </a>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <a
+                    className="nav-link"
+                    id="contact-tab"
+                    data-toggle="tab"
+                    href="#contact"
+                    role="tab"
+                    aria-controls="contact"
+                    aria-selected="false"
+                  >
+                    Holders
+                      <p>1234</p>
+                  </a>
+                </li>
+                <li className="nav-item d-flex" role="presentation">
+                  <a
+                    className="nav-link w-100 d-flex justify-content-center"
+                    id="about-tab"
+                    data-toggle="tab"
+                    href="#about"
+                    role="tab"
+                    aria-controls="about"
+                    aria-selected="false"
+                  >
+                    About
+                    </a>
+                </li>
+              </ul>
+              <div className="tab-content" id="myTabContent">
+                <div
+                  className="tab-pane fade show active"
+                  id="home"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                >
+                  <div className="table-responsive mt-3 balance-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="border-0">Token</th>
+                          <th className="border-0">Weight</th>
+                          <th className="border-0">Pool Balance</th>
+                          <th className="border-0">My Balance</th>
+                          <th className="border-0">My Asset Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.BalanceList.map((item, index) => (
+                          <tr key={index}>
+                            <td>
+                              <div className="icon-name">
+                                <div className="iconDiv">
+                                  <img src={item.icon} alt="logo" />
+                                </div>
+                                <span>{item.symbol}</span>
+                              </div>
+                            </td>
+                            <td>{item.weight}%</td>
+                            <td>{item.poolBalance}K</td>
+                            <td>{item.myBalance}</td>
+                            <td>${item.assetValue}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="profile"
+                  role="tabpanel"
+                  aria-labelledby="profile-tab"
+                >
+                  <div className="table-responsive mt-3 swaps-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="border-0">Trade In</th>
+                          <th className="border-0">Trade Out</th>
+                          <th className="border-0">Transaction</th>
+                          <th className="border-0">Swap Fee</th>
+                          <th className="border-0">Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.SwapsList.map((item, index) => (
+                          <tr key={index}>
+                            <td>
+                              <div className="icon-name">
+                                <div className="iconDiv">
+                                  <img src={item.icon} alt="logo" />
+                                </div>
+                                <span>{item.tradeIn}</span>
+                                <span>{item.symbol}</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="icon-name">
+                                <div className="iconDiv">
+                                  <img src={item.icon} alt="logo" />
+                                </div>
+                                <span>{item.tradeOut}</span>
+                                <span>{item.symbol}</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="addressFormat">
+                                {item.transaction}
+                              </div>
+                            </td>
+                            <td>{item.swapFee}</td>
+                            <td>{item.time}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="contact"
+                  role="tabpanel"
+                  aria-labelledby="contact-tab"
+                >
+                  <div className="table-responsive mt-3 holders-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="border-0">Holder</th>
+                          <th className="border-0">Balance</th>
+                          <th className="border-0">Value</th>
+                          <th className="border-0">Shares</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.HoldersList.map((item, index) => (
+                          <tr key={index}>
+                            <td className="border-0">
+                              {item.holder} {item.symbol}
+                            </td>
+                            <td className="border-0">{item.balance} CRPT</td>
+                            <td className="border-0">${item.value}</td>
+                            <td className="border-0">${item.shares}%</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="about"
+                  role="tabpanel"
+                  aria-labelledby="about-tab"
+                >
+                  <div className="about-content">
+                    <div className="item-list">
+                      <div className="item">
+                        <div className="property">Pool Type</div>
+                        <div className="value">Shared Pool</div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Creator</div>
+                        <div className="value addressFormat">
+                          0x3ierebufbwiefsdffosdvfuvfweofydfsd
+                          </div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Creation date</div>
+                        <div className="value">
+                          October 14, 2020, 12:00:00 PM
+                          </div>
+                      </div>
+                      <div className="item">
+                        <div className="property">CRPT asset</div>
+                        <div className="value addressFormat">
+                          0x3ierebufbwiefsdffosdvfuvfweofydfsd
+                          </div>
+                      </div>
+                      <div className="item">
+                        <div className="property">CRPT total supply</div>
+                        <div className="value">0.12345678901234567890</div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Public swap</div>
+                        <div className="value">Enabled</div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Swap fee</div>
+                        <div className="value">0.25%</div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Total swap volume</div>
+                        <div className="value">$3.97M</div>
+                      </div>
+                      <div className="item">
+                        <div className="property">Total swap fee</div>
+                        <div className="value">$9.93K</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="modal fade SupplyModal"
+                id="LiquidityModal"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-container">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <div className="modal-body">
+                        <h2 className="modalTitle">Add Liquidity</h2>
+                        <div className="ModalContent">
+                          <ul
+                            className="nav nav-tabs ModalTabs"
+                            id="myTab"
+                            role="tablist"
+                          >
+                            <li className="nav-item" role="presentation">
+                              <a
+                                className="nav-link active"
+                                id="supply1-tab"
+                                data-toggle="tab"
+                                href="#supply1"
+                                role="tab"
+                                aria-controls="supply1"
+                                aria-selected="true"
+                              >
+                                Multi Assets
+                                </a>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                              <a
+                                className="nav-link"
+                                id="withdraw1-tab"
+                                data-toggle="tab"
+                                href="#withdraw1"
+                                role="tab"
+                                aria-controls="withdraw1"
+                                aria-selected="false"
+                              >
+                                Single Asset
+                                </a>
+                            </li>
+                          </ul>
+                          <div
+                            className="tab-content modalTabsCont"
+                            id="myTabContent"
+                          >
+                            <div
+                              className="tab-pane fade show active"
+                              id="supply1"
+                              role="tabpanel"
+                              aria-labelledby="supply1-tab"
+                            >
+                              <div className="grey-box">
+                                <p>
+                                  <strong>Pool Overview</strong>
+                                </p>
+                                <div className="overview-box">
+                                  <div>
+                                    <p>0x69c2...ada20</p>
+                                    <p className="mb-0">
+                                      My Share: 0.00% | Swap Fee 0.25%
+                                      </p>
+                                  </div>
+                                  <div>
+                                    <p>ETH 50%</p>
+                                    <p className="mb-0">USDC 50%</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="table-responsive mt-3">
+                                <table className="liquidity-table">
+                                  <thead className="theadBg">
+                                    <tr>
+                                      <th className="border-0">Asset</th>
+                                      <th className="border-0">Balance</th>
+                                      <th className="border-0">
+                                        Deposit Amount
+                                        </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>
+                                        <div className="input-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            placeholder="0.00"
+                                          />
+                                          <div className="input-group-append">
+                                            <button
+                                              className="btn btn-default maxBtn"
+                                              type="submit"
+                                            >
+                                              max
+                                              </button>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>
+                                        <div className="input-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            placeholder="0.00"
+                                          />
+                                          <div className="input-group-append">
+                                            <button
+                                              className="btn btn-default maxBtn"
+                                              type="submit"
+                                            >
+                                              max
+                                                </button>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div className="totalAmount">
+                                <div>
+                                  <span>CRPT Amount</span>
+                                </div>
+                                <div>
+                                  <span>0.0000</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="withdraw1"
+                              role="tabpanel"
+                              aria-labelledby="withdraw1-tab"
+                            >
+                              <div className="grey-box">
+                                <p>
+                                  <strong>Pool Overview</strong>
+                                </p>
+                                <div className="overview-box">
+                                  <div>
+                                    <p>0x69c2...ada20</p>
+                                    <p className="mb-0">
+                                      My Share: 0.00% | Swap Fee 0.25%
+                                      </p>
+                                  </div>
+                                  <div>
+                                    <p>100% Cream</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="table-responsive mt-3">
+                                <table className="liquidity-table">
+                                  <thead className="theadBg">
+                                    <tr>
+                                      <th className="border-0">Asset</th>
+                                      <th className="border-0">Balance</th>
+                                      <th className="border-0">
+                                        Deposit Amount
+                                        </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>
+                                        <div className="input-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            placeholder="0.00"
+                                          />
+                                          <div className="input-group-append">
+                                            <button
+                                              className="btn btn-default maxBtn"
+                                              type="submit"
+                                            >
+                                              max
+                                              </button>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div className="totalAmount">
+                                <div>
+                                  <span>CRPT Amount</span>
+                                </div>
+                                <div>
+                                  <span>0.0000</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-default enableBtn"
+                        >
+                          Add Liquidity
+                          </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="modal fade SupplyModal"
+                id="RemoveLiquidityModal"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-container">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <div className="modal-body">
+                        <h2 className="modalTitle"> Remove Liquidity</h2>
+                        <div className="ModalContent">
+                          <ul
+                            className="nav nav-tabs ModalTabs"
+                            id="myTab"
+                            role="tablist"
+                          >
+                            <li className="nav-item" role="presentation">
+                              <a
+                                className="nav-link active"
+                                id="supply1-tab"
+                                data-toggle="tab"
+                                href="#supply1"
+                                role="tab"
+                                aria-controls="supply1"
+                                aria-selected="true"
+                              >
+                                Multi Assets
+                                </a>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                              <a
+                                className="nav-link"
+                                id="withdraw1-tab"
+                                data-toggle="tab"
+                                href="#withdraw1"
+                                role="tab"
+                                aria-controls="withdraw1"
+                                aria-selected="false"
+                              >
+                                Single Asset
+                                </a>
+                            </li>
+                          </ul>
+                          <div
+                            className="tab-content modalTabsCont"
+                            id="myTabContent"
+                          >
+                            <div
+                              className="tab-pane fade show active"
+                              id="supply1"
+                              role="tabpanel"
+                              aria-labelledby="supply1-tab"
+                            >
+                              <div className="grey-box">
+                                <p>
+                                  <strong>Pool Overview</strong>
+                                </p>
+                                <div className="overview-box">
+                                  <div>
+                                    <p>0x69c2...ada20</p>
+                                    <p className="mb-0">
+                                      My Share: 0.00% | Swap Fee 0.25%
+                                      </p>
+                                  </div>
+                                  <div>
+                                    <p>ETH 50%</p>
+                                    <p className="mb-0">USDC 50%</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="table-responsive mt-3">
+                                <table className="liquidity-table">
+                                  <thead className="theadBg">
+                                    <tr>
+                                      <th className="border-0">Asset</th>
+                                      <th className="border-0">
+                                        My Pool Balance
+                                        </th>
+                                      <th className="border-0">Withdraw</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>0.00000</td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>0.00000</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div className="totalAmount">
+                                <div>
+                                  <span>CRPT Amount</span>
+                                </div>
+                                <div className="input-group Cr-Input">
+                                  <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="0.00"
+                                  />
+                                  <div className="input-group-append">
+                                    <button
+                                      className="btn btn-default maxBtn"
+                                      type="submit"
+                                    >
+                                      max
+                                      </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="withdraw1"
+                              role="tabpanel"
+                              aria-labelledby="withdraw1-tab"
+                            >
+                              <div className="grey-box">
+                                <p>
+                                  <strong>Pool Overview</strong>
+                                </p>
+                                <div className="overview-box">
+                                  <div>
+                                    <p>0x69c2...ada20</p>
+                                    <p className="mb-0">
+                                      My Share: 0.00% | Swap Fee 0.25%
+                                      </p>
+                                  </div>
+                                  <div>
+                                    <p>100% Cream</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="table-responsive mt-3">
+                                <table className="liquidity-table">
+                                  <thead className="theadBg">
+                                    <tr>
+                                      <th className="border-0">Asset</th>
+                                      <th className="border-0">Balance</th>
+                                      <th className="border-0">
+                                        Deposit Amount
+                                        </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div className="icon-name">
+                                          <div className="iconDiv">
+                                            <img
+                                              src={Ethereum}
+                                              alt="Ethereum"
+                                            />
+                                          </div>
+                                          <div className="tableinnerSec">
+                                            <div>ETH</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>0.02</td>
+                                      <td>
+                                        <div className="input-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            placeholder="0.00"
+                                          />
+                                          <div className="input-group-append">
+                                            <button
+                                              className="btn btn-default maxBtn"
+                                              type="submit"
+                                            >
+                                              max
+                                              </button>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div className="totalAmount">
+                                <div>
+                                  <span>CRPT Amount</span>
+                                </div>
+                                <div>
+                                  <span>0.0000</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-default enableBtn"
+                        >
+                          Remove Liquidity
+                          </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {snackbarMessage && this.renderSnackbar()}
         </div>
-        {loading && <Loader />}
-        {snackbarMessage && this.renderSnackbar()}
       </div>
     )
+    // }
+    // return (
+    //   <div className={classes.root}>
+    //     <div className={classes.investedContainer}>
+    //       <Typography variant={'h5'} className={classes.disaclaimer}>
+    //         This project is in beta. Use at your own risk.
+    //       </Typography>
+    //       {this.renderFilters()}
+    //       {this.renderAssetBlocks()}
+    //       {this.renderStrategyRewards()}
+    //     </div>
+    //     {loading && <Loader />}
+    //     {snackbarMessage && this.renderSnackbar()}
+    //   </div>
+    // )
   }
 
   onSearchChanged = (event) => {

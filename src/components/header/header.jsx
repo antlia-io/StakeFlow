@@ -72,6 +72,7 @@ class Header extends Component {
     }
     const { classes } = this.props;
     const { modalOpen } = this.state;
+    const account = store.getStore('account')
     return (
       <div className={classes.root}>
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -127,7 +128,7 @@ class Header extends Component {
                 </li>
                 <li className="nav-item">
                   <button className="connectBtn" onClick={this.addressClicked}>
-                    Connect Wallet
+                    {account.address ? <>{account.address}</> : <>Connect Wallet</>}
                   </button>
                 </li>
               </ul>

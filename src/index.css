@@ -74,6 +74,10 @@ nav {
 .navbar-nav {
   justify-content: flex-end;
 }
+.installBtn {
+  margin: 20px auto 0 !important;
+}
+
 .connectBtn {
   background-color: #004bff;
   border-radius: 5px;

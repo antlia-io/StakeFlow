@@ -94,21 +94,21 @@ class Rewards extends Component {
 
   render() {
     const { classes } = this.props;
-    const { account } = this.state;
-    if (!account || !account.address) {
-      return (
-        <div className={classes.root}>
-          <div className="container-xl">
-            <div className="stake cardBg mh">
-              <div className="cardHeader">
-                <h4>Rewards</h4>
-              </div>
-              <p>Coming soon</p>
+    // const { account } = this.state;
+    // if (!account || !account.address) {
+    return (
+      <div className={classes.root}>
+        <div className="container-xl">
+          <div className="stake cardBg mh">
+            <div className="cardHeader">
+              <h4>Rewards</h4>
             </div>
+            <p>Coming soon</p>
           </div>
         </div>
-      )
-    }
+      </div>
+    )
+    // }
   }
 }
 

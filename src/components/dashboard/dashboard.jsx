@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, TextField, MenuItem } from '@material-ui/core';
-import Loader from '../loader';
+// import Loader from '../loader';
 import InfoIcon from '@material-ui/icons/Info';
 import AssetsDetails from '../assetsdetails';
 import { ERROR, CONNECTION_CONNECTED, CONNECTION_DISCONNECTED, GET_DASHBOARD_SNAPSHOT, DASHBOARD_SNAPSHOT_RETURNED } from '../../constants';
@@ -155,342 +155,343 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
-    const { loading, dashboard, growth, currency, account, value } = this.state;
-    if (!account || !account.address) {
-      return (
-        <div className={classes.root}>
-          <div
-            className="modal fade myModal"
-            id="StakeModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-container">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <div className="modal-body">
-                    <h2 className="modalTitle">Confirm Deposit</h2>
-                    <p className="modalDesc">
-                      Be aware! You will NOT be able to withdraw you deposits
+    const { value } = this.state;
+    // const { loading, dashboard, growth, currency, account, value } = this.state;
+    // if (!account || !account.address) {
+    return (
+      <div className={classes.root}>
+        <div
+          className="modal fade myModal"
+          id="StakeModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-container">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div className="modal-body">
+                  <h2 className="modalTitle">Confirm Deposit</h2>
+                  <p className="modalDesc">
+                    Be aware! You will NOT be able to withdraw you deposits
                       unit Ethereum <span className="br-block"></span>
                       Foundation finishes Ethereum 2.0 migration, which is
                       Estimated to deliver in 2021.
                     </p>
-                    <p className="modalDesc">
-                      This is a custoiol service and it will incur potential
-                      fees. You should do your
+                  <p className="modalDesc">
+                    This is a custoiol service and it will incur potential
+                    fees. You should do your
                       <span className="br-block"></span> own research and use at
                       your own risk.
                     </p>
-                    <button
-                      type="button"
-                      className="btn btn-default enableBtn"
-                      data-toggle="modal"
-                      data-dismiss="modal"
-                      data-target="#ConfirmModal"
-                    >
-                      Stake
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="modal fade myModal"
-            id="ConfirmModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-container">
-              <div className="modal-dialog">
-                <div className="modal-content">
                   <button
                     type="button"
-                    className="close"
+                    className="btn btn-default enableBtn"
+                    data-toggle="modal"
                     data-dismiss="modal"
-                    aria-label="Close"
+                    data-target="#ConfirmModal"
                   >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <div className="modal-body">
-                    <h2 className="modalTitle">Confirm Transaction</h2>
-                    <div
-                      className="spinner-border text-primary custom-spinner"
-                      role="status"
-                    >
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                    <p className="mt-3">Confirm the Transacion</p>
-                  </div>
+                    Stake
+                    </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container-xl">
-            <AssetsDetails />
-            <div className="stake cardBg">
-              <div className="topper">
-                <Row>
-                  <Col lg={4} md={5} sm={12} xs={12}>
-                    <div className="valueBox">
-                      <p>Staked Funds</p>
-                      <h1>0000.075%</h1>
-                    </div>
-                  </Col>
-                  <Col md={2} sm={12} xs={12} className="d-md-block">
-                    <span className="vl" />
-                  </Col>
-                  <Col lg={4} md={5} sm={12} xs={12}>
-                    <div className="valueBox">
-                      <p>Token Rewards</p>
-                      <h1>0000.075%</h1>
-                    </div>
-                  </Col>
-                  <Col lg={4} sm={6} xs={12} className="d-md-none" />
-                </Row>
-              </div>
-              <div className="cardHeader">
-                <h4>Stake</h4>
-              </div>
-              <div className="selection">
-                <label>Stake</label>
-                <Dropdown
-                  isOpen={this.state.dropdownOpen}
-                  toggle={() => this.toggle()}
-                  right="true"
-                >
-                  <div className="coin-selection">
-                    <div className="icon-name">
-                      <div className="iconDiv">
-                        <img src={BTC} alt="BTC" />
-                      </div>
-                      <span className="symbol">BTC</span>
-                      <span className="name">Bitcoin</span>
-                    </div>
-                  </div>
-                  <DropdownToggle caret></DropdownToggle>
-                  <DropdownMenu right={true}>
-                    {this.state.CoinList.map((item, index) => (
-                      <DropdownItem key={index}>
-                        <div className="icon-name">
-                          <div className="iconDiv">
-                            <img src={item.icon} alt="logo" />
-                          </div>
-                          <span className="symbol">{item.symbol}</span>
-                          <span className="name">{item.name}</span>
-                        </div>
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
-              <div className="return">
-                <p>Return 5.3 % </p> <span className="vl" />
-                <p>1 ETH = 1.234 ANAETH</p>
-              </div>
-              <Slider
-                min={0}
-                max={100}
-                value={value}
-                onChangeStart={this.handleChangeStart}
-                onChange={this.handleChange}
-                onChangeComplete={this.handleChangeComplete}
-              />
-              <div className="range-limit">
-                <div className="left">0</div>
-                <div className="right">ANA ETH MAX</div>
-              </div>
-              <div className="selection">
-                <label>You have 2.34 ETH</label>
-                <div className="icon-name enterAmount">
-                  <div className="iconDiv">
-                    <img src={Ethereum} alt="ETH" />
-                  </div>
-                  <span className="symbol">ETH</span>
-                  <input type="text" placeholder="Amount" />
-                </div>
-              </div>
-              <div className="network-fee">
-                <p>Network Fee:</p>
-                <p className="colored">Why Stake with StakeFlow</p>
-              </div>
-              <div className="d-block m-auto">
+        </div>
+        <div
+          className="modal fade myModal"
+          id="ConfirmModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-container">
+            <div className="modal-dialog">
+              <div className="modal-content">
                 <button
-                  className="stake-btn isDisabled"
                   type="button"
-                  data-toggle="modal"
-                  data-target="#StakeModal"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
                 >
-                  Stake
+                  <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-    return (
-      <div className={classes.root}>
-        <div className={classes.investedContainer}>
-          <div className={classes.portfolioContainer}>
-            <div className={classes.titleBalance} onClick={this.balanceClicked}>
-              {currency === 'USD' && (
-                <Typography variant={'h2'}>
-                  $
-                  {parseFloat(
-                    dashboard.portfolio_balance_usd.toFixed(2),
-                  ).toLocaleString()}
-                </Typography>
-              )}
-              {currency === 'ETH' && (
-                <div className={classes.inline}>
-                  <Typography variant={'h2'} noWrap>
-                    {parseFloat(
-                      dashboard.portfolio_balance_eth.toFixed(2),
-                    ).toLocaleString()}
-                  </Typography>
-                  <Typography className={classes.symbol} variant={'h3'}>
-                    ETH
-                  </Typography>
+                <div className="modal-body">
+                  <h2 className="modalTitle">Confirm Transaction</h2>
+                  <div
+                    className="spinner-border text-primary custom-spinner"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                  <p className="mt-3">Confirm the Transacion</p>
                 </div>
-              )}
-              <Typography variant={'h4'} className={classes.gray}>
-                Portfolio Balance
-              </Typography>
+              </div>
             </div>
-            <div className={classes.between}></div>
-            {growth === 0 && (
-              <div
-                className={classes.titleBalance}
-                onClick={this.growthClicked}
-              >
-                {currency === 'USD' && (
-                  <Typography variant={'h2'}>
-                    $
-                    {parseFloat(
-                      dashboard.portfolio_growth_usd_daily.toFixed(2),
-                    ).toLocaleString()}
-                  </Typography>
-                )}
-                {currency === 'ETH' && (
-                  <div className={classes.inline}>
-                    <Typography variant={'h2'} noWrap>
-                      {parseFloat(
-                        dashboard.portfolio_growth_eth_daily.toFixed(2),
-                      ).toLocaleString()}
-                    </Typography>
-                    <Typography className={classes.symbol} variant={'h3'}>
-                      ETH
-                    </Typography>
-                  </div>
-                )}
-                <Typography
-                  variant={'h4'}
-                  className={`${classes.gray} ${classes.prettyAlign}`}
-                >
-                  Daily Growth
-                </Typography>
-              </div>
-            )}
-            {growth === 1 && (
-              <div
-                className={classes.titleBalance}
-                onClick={this.growthClicked}
-              >
-                {currency === 'USD' && (
-                  <Typography variant={'h2'}>
-                    $
-                    {parseFloat(
-                      dashboard.portfolio_growth_usd_weekly.toFixed(2),
-                    ).toLocaleString()}
-                  </Typography>
-                )}
-                {currency === 'ETH' && (
-                  <div className={classes.inline}>
-                    <Typography variant={'h2'} noWrap>
-                      {parseFloat(
-                        dashboard.portfolio_growth_eth_weekly.toFixed(2),
-                      ).toLocaleString()}
-                    </Typography>
-                    <Typography className={classes.symbol} variant={'h3'}>
-                      ETH
-                    </Typography>
-                  </div>
-                )}
-                <Typography
-                  variant={'h4'}
-                  className={`${classes.gray} ${classes.prettyAlign}`}
-                >
-                  Weekly Growth
-                </Typography>
-              </div>
-            )}
-            {growth === 2 && (
-              <div
-                className={classes.titleBalance}
-                onClick={this.growthClicked}
-              >
-                {currency === 'USD' && (
-                  <Typography variant={'h2'}>
-                    $
-                    {parseFloat(
-                      dashboard.portfolio_growth_usd_yearly.toFixed(2),
-                    ).toLocaleString()}
-                  </Typography>
-                )}
-                {currency === 'ETH' && (
-                  <div className={classes.inline}>
-                    <Typography variant={'h2'} noWrap>
-                      {parseFloat(
-                        dashboard.portfolio_growth_eth_yearly.toFixed(2),
-                      ).toLocaleString()}
-                    </Typography>
-                    <Typography className={classes.symbol} variant={'h3'}>
-                      ETH
-                    </Typography>
-                  </div>
-                )}
-                <Typography
-                  variant={'h4'}
-                  className={`${classes.gray} ${classes.prettyAlign}`}
-                >
-                  Yearly Growth
-                </Typography>
-              </div>
-            )}
           </div>
-          {this.renderBasedOn()}
-          {dashboard.vaults && dashboard.vaults.length > 0 && (
-            <div className={classes.vaultContainer}>
-              <Typography variant={'h3'} className={classes.sectionHeading}>
-                Vaults Overview
-              </Typography>
-              {this.renderVaults()}
-            </div>
-          )}
-          {dashboard.assets && dashboard.assets.length > 0 && (
-            <div className={classes.earnContainer}>
-              <Typography variant={'h3'} className={classes.sectionHeading}>
-                Earn Overview
-              </Typography>
-              {this.renderEarn()}
-            </div>
-          )}
         </div>
-        {loading && <Loader />}
+        <div className="container-xl">
+          <AssetsDetails />
+          <div className="stake cardBg">
+            <div className="topper">
+              <Row>
+                <Col lg={4} md={5} sm={12} xs={12}>
+                  <div className="valueBox">
+                    <p>Staked Funds</p>
+                    <h1>0000.075%</h1>
+                  </div>
+                </Col>
+                <Col md={2} sm={12} xs={12} className="d-md-block">
+                  <span className="vl" />
+                </Col>
+                <Col lg={4} md={5} sm={12} xs={12}>
+                  <div className="valueBox">
+                    <p>Token Rewards</p>
+                    <h1>0000.075%</h1>
+                  </div>
+                </Col>
+                <Col lg={4} sm={6} xs={12} className="d-md-none" />
+              </Row>
+            </div>
+            <div className="cardHeader">
+              <h4>Stake</h4>
+            </div>
+            <div className="selection">
+              <label>Stake</label>
+              <Dropdown
+                isOpen={this.state.dropdownOpen}
+                toggle={() => this.toggle()}
+                right="true"
+              >
+                <div className="coin-selection">
+                  <div className="icon-name">
+                    <div className="iconDiv">
+                      <img src={BTC} alt="BTC" />
+                    </div>
+                    <span className="symbol">BTC</span>
+                    <span className="name">Bitcoin</span>
+                  </div>
+                </div>
+                <DropdownToggle caret></DropdownToggle>
+                <DropdownMenu right={true}>
+                  {this.state.CoinList.map((item, index) => (
+                    <DropdownItem key={index}>
+                      <div className="icon-name">
+                        <div className="iconDiv">
+                          <img src={item.icon} alt="logo" />
+                        </div>
+                        <span className="symbol">{item.symbol}</span>
+                        <span className="name">{item.name}</span>
+                      </div>
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+            <div className="return">
+              <p>Return 5.3 % </p> <span className="vl" />
+              <p>1 ETH = 1.234 ANAETH</p>
+            </div>
+            <Slider
+              min={0}
+              max={100}
+              value={value}
+              onChangeStart={this.handleChangeStart}
+              onChange={this.handleChange}
+              onChangeComplete={this.handleChangeComplete}
+            />
+            <div className="range-limit">
+              <div className="left">0</div>
+              <div className="right">ANA ETH MAX</div>
+            </div>
+            <div className="selection">
+              <label>You have 2.34 ETH</label>
+              <div className="icon-name enterAmount">
+                <div className="iconDiv">
+                  <img src={Ethereum} alt="ETH" />
+                </div>
+                <span className="symbol">ETH</span>
+                <input type="text" placeholder="Amount" />
+              </div>
+            </div>
+            <div className="network-fee">
+              <p>Network Fee:</p>
+              <p className="colored">Why Stake with StakeFlow</p>
+            </div>
+            <div className="d-block m-auto">
+              <button
+                className="stake-btn isDisabled"
+                type="button"
+                data-toggle="modal"
+                data-target="#StakeModal"
+              >
+                Stake
+                </button>
+            </div>
+          </div>
+        </div>
       </div>
     )
+    // }
+    // return (
+    //   <div className={classes.root}>
+    //     <div className={classes.investedContainer}>
+    //       <div className={classes.portfolioContainer}>
+    //         <div className={classes.titleBalance} onClick={this.balanceClicked}>
+    //           {currency === 'USD' && (
+    //             <Typography variant={'h2'}>
+    //               $
+    //               {parseFloat(
+    //                 dashboard.portfolio_balance_usd.toFixed(2),
+    //               ).toLocaleString()}
+    //             </Typography>
+    //           )}
+    //           {currency === 'ETH' && (
+    //             <div className={classes.inline}>
+    //               <Typography variant={'h2'} noWrap>
+    //                 {parseFloat(
+    //                   dashboard.portfolio_balance_eth.toFixed(2),
+    //                 ).toLocaleString()}
+    //               </Typography>
+    //               <Typography className={classes.symbol} variant={'h3'}>
+    //                 ETH
+    //               </Typography>
+    //             </div>
+    //           )}
+    //           <Typography variant={'h4'} className={classes.gray}>
+    //             Portfolio Balance
+    //           </Typography>
+    //         </div>
+    //         <div className={classes.between}></div>
+    //         {growth === 0 && (
+    //           <div
+    //             className={classes.titleBalance}
+    //             onClick={this.growthClicked}
+    //           >
+    //             {currency === 'USD' && (
+    //               <Typography variant={'h2'}>
+    //                 $
+    //                 {parseFloat(
+    //                   dashboard.portfolio_growth_usd_daily.toFixed(2),
+    //                 ).toLocaleString()}
+    //               </Typography>
+    //             )}
+    //             {currency === 'ETH' && (
+    //               <div className={classes.inline}>
+    //                 <Typography variant={'h2'} noWrap>
+    //                   {parseFloat(
+    //                     dashboard.portfolio_growth_eth_daily.toFixed(2),
+    //                   ).toLocaleString()}
+    //                 </Typography>
+    //                 <Typography className={classes.symbol} variant={'h3'}>
+    //                   ETH
+    //                 </Typography>
+    //               </div>
+    //             )}
+    //             <Typography
+    //               variant={'h4'}
+    //               className={`${classes.gray} ${classes.prettyAlign}`}
+    //             >
+    //               Daily Growth
+    //             </Typography>
+    //           </div>
+    //         )}
+    //         {growth === 1 && (
+    //           <div
+    //             className={classes.titleBalance}
+    //             onClick={this.growthClicked}
+    //           >
+    //             {currency === 'USD' && (
+    //               <Typography variant={'h2'}>
+    //                 $
+    //                 {parseFloat(
+    //                   dashboard.portfolio_growth_usd_weekly.toFixed(2),
+    //                 ).toLocaleString()}
+    //               </Typography>
+    //             )}
+    //             {currency === 'ETH' && (
+    //               <div className={classes.inline}>
+    //                 <Typography variant={'h2'} noWrap>
+    //                   {parseFloat(
+    //                     dashboard.portfolio_growth_eth_weekly.toFixed(2),
+    //                   ).toLocaleString()}
+    //                 </Typography>
+    //                 <Typography className={classes.symbol} variant={'h3'}>
+    //                   ETH
+    //                 </Typography>
+    //               </div>
+    //             )}
+    //             <Typography
+    //               variant={'h4'}
+    //               className={`${classes.gray} ${classes.prettyAlign}`}
+    //             >
+    //               Weekly Growth
+    //             </Typography>
+    //           </div>
+    //         )}
+    //         {growth === 2 && (
+    //           <div
+    //             className={classes.titleBalance}
+    //             onClick={this.growthClicked}
+    //           >
+    //             {currency === 'USD' && (
+    //               <Typography variant={'h2'}>
+    //                 $
+    //                 {parseFloat(
+    //                   dashboard.portfolio_growth_usd_yearly.toFixed(2),
+    //                 ).toLocaleString()}
+    //               </Typography>
+    //             )}
+    //             {currency === 'ETH' && (
+    //               <div className={classes.inline}>
+    //                 <Typography variant={'h2'} noWrap>
+    //                   {parseFloat(
+    //                     dashboard.portfolio_growth_eth_yearly.toFixed(2),
+    //                   ).toLocaleString()}
+    //                 </Typography>
+    //                 <Typography className={classes.symbol} variant={'h3'}>
+    //                   ETH
+    //                 </Typography>
+    //               </div>
+    //             )}
+    //             <Typography
+    //               variant={'h4'}
+    //               className={`${classes.gray} ${classes.prettyAlign}`}
+    //             >
+    //               Yearly Growth
+    //             </Typography>
+    //           </div>
+    //         )}
+    //       </div>
+    //       {this.renderBasedOn()}
+    //       {dashboard.vaults && dashboard.vaults.length > 0 && (
+    //         <div className={classes.vaultContainer}>
+    //           <Typography variant={'h3'} className={classes.sectionHeading}>
+    //             Vaults Overview
+    //           </Typography>
+    //           {this.renderVaults()}
+    //         </div>
+    //       )}
+    //       {dashboard.assets && dashboard.assets.length > 0 && (
+    //         <div className={classes.earnContainer}>
+    //           <Typography variant={'h3'} className={classes.sectionHeading}>
+    //             Earn Overview
+    //           </Typography>
+    //           {this.renderEarn()}
+    //         </div>
+    //       )}
+    //     </div>
+    //     {loading && <Loader />}
+    //   </div>
+    // )
   }
 
   renderBasedOn = () => {
