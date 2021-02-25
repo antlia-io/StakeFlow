@@ -181,16 +181,16 @@ const onConnectionClicked = (
   activate(connectorsByName[name])
 }
 
-const onDeactivateClicked = (deactivate, connector) => {
-  if (deactivate) {
-    deactivate()
-  }
-  if (connector && connector.close) {
-    connector.close()
-  }
-  store.setStore({ account: {}, web3context: null })
-  emitter.emit(CONNECTION_DISCONNECTED)
-}
+// const onDeactivateClicked = (deactivate, connector) => {
+//   if (deactivate) {
+//     deactivate()
+//   }
+//   if (connector && connector.close) {
+//     connector.close()
+//   }
+//   store.setStore({ account: {}, web3context: null })
+//   emitter.emit(CONNECTION_DISCONNECTED)
+// }
 
 const MyComponent = (props) => {
   const context = useWeb3React()
@@ -204,12 +204,13 @@ const MyComponent = (props) => {
     library,
     account,
     activate,
-    deactivate,
+    // deactivate,
     active,
     error,
   } = context;
   var connectorsByName = store.getStore('connectorsByName')
-  const { closeModal, t } = props;
+  const { closeModal } = props;
+  // const { closeModal, t } = props;
   const [activatingConnector, setActivatingConnector] = useState()
   useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
@@ -238,158 +239,187 @@ const MyComponent = (props) => {
   // useInactiveListener(!triedEager || !!activatingConnector);
   const width = window.innerWidth;
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: width > 650 ? 'space-between' : 'center',
-        alignItems: 'center',
-        overflowY: 'auto',
-        height: '320px',
-        margin: '1rem 0',
-      }}
-    >
-      {Object.keys(connectorsByName).map((name) => {
-        const currentConnector = connectorsByName[name]
-        const activating = currentConnector === activatingConnector
-        const connected =
-          currentConnector === connector || currentConnector === localConnector
-        const disabled = !!activatingConnector || !!error
-        var url
-        var display = name
-        if (name === 'MetaMask') {
-          url = require('../../assets/icn-metamask.svg')
-        } else if (name === 'WalletConnect') {
-          url = require('../../assets/walletConnectIcon.svg')
-        } else if (name === 'TrustWallet') {
-          url = require('../../assets/trustWallet.png')
-        } else if (name === 'Portis') {
-          url = require('../../assets/portisIcon.png')
-        } else if (name === 'Fortmatic') {
-          url = require('../../assets/fortmaticIcon.png')
-        } else if (name === 'Ledger') {
-          url = require('../../assets/icn-ledger.svg')
-        } else if (name === 'Squarelink') {
-          url = require('../../assets/squarelink.png')
-        } else if (name === 'Trezor') {
-          url = require('../../assets/trezor.png')
-        } else if (name === 'Torus') {
-          url = require('../../assets/torus.jpg')
-        } else if (name === 'Authereum') {
-          url = require('../../assets/icn-aethereum.svg')
-        } else if (name === 'WalletLink') {
-          display = 'Coinbase Wallet'
-          url = require('../../assets/coinbaseWalletIcon.svg')
-        } else if (name === 'Frame') {
-          return ''
-        }
-        return (
+    <>
+      {error && error.name === "NoEthereumProviderError"
+        ?
+        <div>
+          <div>You'll need to install <b>MetaMask</b> to continue. Once you have it installed, go ahead and <a href="/#" onClick={() => window.location.reload()}>refresh the page.</a></div>
+          <a href="https://metamask.io/download" target="_blank" rel="noopener noreferrer">
+            <button className="connectBtn installBtn">
+              Install MetaMask
+          </button>
+          </a>
+        </div>
+        :
+        error && error.name === "NoBscProviderError"
+          ?
+          <div>
+            <div>You'll need to install <b>Binance Chain Wallet</b> to continue. Once you have it installed, go ahead and <a href="/#" onClick={() => window.location.reload()}>refresh the page.</a></div>
+            <a href="https://docs.binance.org/smart-chain/wallet/binance.html" target="_blank" rel="noopener noreferrer">
+              <button className="connectBtn installBtn">
+                Install Binance Chain Wallet
+          </button>
+            </a>
+          </div>
+          :
           <div
-            key={name}
             style={{
-              padding: '12px 0px',
               display: 'flex',
               flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              width: '100%',
+              justifyContent: width > 650 ? 'space-between' : 'center',
+              alignItems: 'center',
+              // overflowY: 'auto',
+              // height: '320px',
+              margin: '1rem 0',
             }}
           >
+            {Object.keys(connectorsByName).map((name) => {
+              const currentConnector = connectorsByName[name]
+              const activating = currentConnector === activatingConnector
+              const connected = currentConnector === connector || currentConnector === localConnector
+              const disabled = !!activatingConnector
+              var url
+              var display = name
+              if (name === 'MetaMask') {
+                display = 'Metamask'
+                url = require('../../assets/icn-metamask.svg')
+              } else if (name === 'Binance') {
+                display = 'Binance Chain Wallet'
+                url = require('../../assets/backwalls/binance.png')
+              } else if (name === 'WalletConnect') {
+                display = 'Wallet Connect'
+                url = require('../../assets/walletConnectIcon.svg')
+              } else if (name === 'TrustWallet') {
+                url = require('../../assets/trustWallet.png')
+              } else if (name === 'Portis') {
+                url = require('../../assets/portisIcon.png')
+              } else if (name === 'Fortmatic') {
+                url = require('../../assets/fortmaticIcon.png')
+              } else if (name === 'Ledger') {
+                url = require('../../assets/icn-ledger.svg')
+              } else if (name === 'Squarelink') {
+                url = require('../../assets/squarelink.png')
+              } else if (name === 'Trezor') {
+                url = require('../../assets/trezor.png')
+              } else if (name === 'Torus') {
+                url = require('../../assets/torus.jpg')
+              } else if (name === 'Authereum') {
+                url = require('../../assets/icn-aethereum.svg')
+              } else if (name === 'WalletLink') {
+                display = 'Coinbase Wallet'
+                url = require('../../assets/coinbaseWalletIcon.svg')
+              } else if (name === 'Frame') {
+                return ''
+              }
+              return (
+                <div
+                  key={name}
+                  style={{
+                    padding: '12px 0px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                >
+                  <Button
+                    style={{
+                      padding: '16px',
+                      backgroundColor: 'white',
+                      borderRadius: '0.5rem',
+                      border: '1px solid #E1E1E1',
+                      fontWeight: 500,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      // minWidth: '250px',
+                      width: '100%',
+                    }}
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                      onConnectionClicked(
+                        currentConnector,
+                        name,
+                        setActivatingConnector,
+                        activate,
+                      )
+                    }}
+                    disabled={disabled}
+                  >
+                    <Typography
+                      style={{
+                        margin: '0px 12px',
+                        color: 'rgb(1, 1, 1)',
+                        fontWeight: 500,
+                        fontSize: '1rem',
+                      }}
+                      variant={'h3'}
+                    >
+                      {display}
+                    </Typography>
+                    {!activating && !connected && (
+                      <img
+                        style={{
+                          position: 'absolute',
+                          right: '20px',
+
+                          width: '30px',
+                          height: '30px',
+                        }}
+                        src={url}
+                        alt="logo"
+                      />
+                    )}
+                    {activating && (
+                      <CircularProgress size={15} style={{ marginRight: '10px' }} />
+                    )}
+                    {!activating && connected && (
+                      <div
+                        style={{
+                          background: '#4caf50',
+                          borderRadius: '10px',
+                          width: '10px',
+                          height: '10px',
+                          marginRight: '10px',
+                        }}
+                      ></div>
+                    )}
+                  </Button>
+                </div>
+              )
+            })}
+            {error && (error.name === "ProviderError" || error.name === "UserRejectedRequestError") && <div style={{ color: "red", width: "100%" }}>This dapp needs access to your account information.</div>}
+            {/* <div style={{ width: '252px', margin: '12px 0px' }}>
             <Button
               style={{
-                padding: '16px',
+                padding: '12px',
                 backgroundColor: 'white',
-                borderRadius: '0.5rem',
+                borderRadius: '20px',
                 border: '1px solid #E1E1E1',
                 fontWeight: 500,
-                display: 'flex',
-                justifyContent: 'space-between',
-                // minWidth: '250px',
-                width: '100%',
+                minWidth: '250px',
               }}
               variant="outlined"
               color="primary"
               onClick={() => {
-                onConnectionClicked(
-                  currentConnector,
-                  name,
-                  setActivatingConnector,
-                  activate,
-                )
+                onDeactivateClicked(deactivate, connector)
               }}
-              disabled={disabled}
             >
               <Typography
                 style={{
-                  margin: '0px 12px',
-                  color: 'rgb(1, 1, 1)',
-                  fontWeight: 500,
-                  fontSize: '1rem',
+                  marginLeft: '12px',
+                  fontWeight: '700',
+                  color: '#DC6BE5',
                 }}
-                variant={'h3'}
+                variant={'h5'}
+                color="primary"
               >
-                {display}
+                {t('Unlock.Deactivate')}
               </Typography>
-              {!activating && !connected && (
-                <img
-                  style={{
-                    position: 'absolute',
-                    right: '20px',
-
-                    width: '30px',
-                    height: '30px',
-                  }}
-                  src={url}
-                  alt="logo"
-                />
-              )}
-              {activating && (
-                <CircularProgress size={15} style={{ marginRight: '10px' }} />
-              )}
-              {!activating && connected && (
-                <div
-                  style={{
-                    background: '#4caf50',
-                    borderRadius: '10px',
-                    width: '10px',
-                    height: '10px',
-                    marginRight: '10px',
-                  }}
-                ></div>
-              )}
             </Button>
+          </div> */}
           </div>
-        )
-      })}
-      <div style={{ width: '252px', margin: '12px 0px' }}>
-        <Button
-          style={{
-            padding: '12px',
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            border: '1px solid #E1E1E1',
-            fontWeight: 500,
-            minWidth: '250px',
-          }}
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            onDeactivateClicked(deactivate, connector)
-          }}
-        >
-          <Typography
-            style={{
-              marginLeft: '12px',
-              fontWeight: '700',
-              color: '#DC6BE5',
-            }}
-            variant={'h5'}
-            color="primary"
-          >
-            {t('Unlock.Deactivate')}
-          </Typography>
-        </Button>
-      </div>
-    </div>
+      }</>
   )
 }
 

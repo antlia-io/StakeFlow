@@ -86,17 +86,18 @@ import Web3 from 'web3';
 import BigNumber from 'bignumber.js'
 
 import {
+  binance,
   injected,
   walletconnect,
   walletlink,
-  ledger,
-  trezor,
-  frame,
-  fortmatic,
-  portis,
-  squarelink,
-  torus,
-  authereum
+  // ledger,
+  // trezor,
+  // frame,
+  // fortmatic,
+  // portis,
+  // squarelink,
+  // torus,
+  // authereum
 } from "./connectors";
 
 const rp = require('request-promise');
@@ -142,17 +143,18 @@ class Store {
       events: [],
       connectorsByName: {
         MetaMask: injected,
-        TrustWallet: injected,
+        Binance: binance,
+        // TrustWallet: injected,
         WalletConnect: walletconnect,
         WalletLink: walletlink,
-        Ledger: ledger,
-        Trezor: trezor,
-        Frame: frame,
-        Fortmatic: fortmatic,
-        Portis: portis,
-        Squarelink: squarelink,
-        Torus: torus,
-        Authereum: authereum
+        // Ledger: ledger,
+        // Trezor: trezor,
+        // Frame: frame,
+        // Fortmatic: fortmatic,
+        // Portis: portis,
+        // Squarelink: squarelink,
+        // Torus: torus,
+        // Authereum: authereum
       },
       builtWith: [
         {

@@ -10,6 +10,7 @@ import { PortisConnector } from "@web3-react/portis-connector";
 import { SquarelinkConnector } from "@web3-react/squarelink-connector";
 import { TorusConnector } from "@web3-react/torus-connector";
 import { AuthereumConnector } from "@web3-react/authereum-connector";
+import { BscConnector } from '@binance-chain/bsc-connector';
 
 const POLLING_INTERVAL = 12000;
 const RPC_URLS = {
@@ -20,6 +21,10 @@ const RPC_URLS = {
 export const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42]
 });
+
+export const binance = new BscConnector({
+  supportedChainIds: [56, 97] // later on 1 ethereum mainnet and 3 ethereum ropsten will be supported
+})
 
 // export const network = new NetworkConnector({
 //   urls: { 1: RPC_URLS[1], 4: RPC_URLS[4] },
